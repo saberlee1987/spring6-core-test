@@ -2,17 +2,29 @@ package com.saberspringcore.test.main;
 
 import com.saberspringcore.test.config.AppConfig;
 import com.saberspringcore.test.model.Person;
+import com.saberspringcore.test.model.Singer;
 import com.saberspringcore.test.services.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jndi.TypeMismatchNamingException;
 import org.springframework.util.StopWatch;
 
 public class Main {
     public static void main(String[] args) {
 //        ApplicationContext context=  new ClassPathXmlApplicationContext("springConfig.xml");
         ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+
+//        Singer singer = context.getBean("singerOne", Singer.class);
+        Singer singerOne = getSingerBean("singerOne",context, Singer.class);
+        Singer singerTwo = getSingerBean("singerTwo",context, Singer.class);
+        Singer singerThree = getSingerBean("singerThree",context, Singer.class);
+
+        System.out.println(singerOne);
+        System.out.println(singerTwo);
+        System.out.println(singerThree);
+
 //        HelloServices helloServices = context.getBean(HelloServices.class);
 //        String sayHello = helloServices.sayHello("saber", "azizi");
 //        String sayBye = helloServices.sayBye("saber", "azizi");
@@ -57,5 +69,18 @@ public class Main {
         }
         stopWatch.stop();
         System.out.println("100000 gets took " + stopWatch.getTotalTimeMillis() + " ms");
+    }
+
+    private static <T> T getSingerBean(String beanName, ApplicationContext context, Class<T> requiredType) {
+        try {
+            Object bean = context.getBean(beanName);
+            if (requiredType != null && !requiredType.isInstance(bean)) {
+                throw new TypeMismatchNamingException(beanName, requiredType, bean.getClass());
+            }
+            return (T) bean;
+        } catch (Exception ex) {
+            System.out.println("An error occurred in bean configuration: " + ex.getMessage());
+            return null;
+        }
     }
 }

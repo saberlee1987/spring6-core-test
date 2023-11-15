@@ -1,5 +1,6 @@
 package com.saberspringcore.test.config;
 
+import com.saberspringcore.test.model.Singer;
 import com.saberspringcore.test.model.Song;
 import com.saberspringcore.test.services.HelloServices;
 import org.springframework.context.annotation.Bean;
@@ -32,5 +33,25 @@ public class AppConfig {
                 new Song("Not the end"),
                 new Song("Rise Up")
         );
+    }
+
+    @Bean(initMethod = "init")
+    Singer singerOne(){
+        Singer singer = new Singer();
+        singer.setName("John Mayer");
+        singer.setAge(43);
+        return singer;
+    }
+    @Bean(initMethod = "init")
+    Singer singerTwo(){
+        Singer singer = new Singer();
+        singer.setAge(42);
+        return singer;
+    }
+    @Bean(initMethod = "init")
+    Singer singerThree(){
+        Singer singer = new Singer();
+        singer.setName("John Butler");
+        return singer;
     }
 }
