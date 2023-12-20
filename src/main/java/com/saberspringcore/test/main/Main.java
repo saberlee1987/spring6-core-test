@@ -1,6 +1,7 @@
 package com.saberspringcore.test.main;
 
 import com.saberspringcore.test.config.AppConfig;
+import com.saberspringcore.test.model.MessageDigester;
 import com.saberspringcore.test.model.Person;
 import com.saberspringcore.test.model.Singer;
 import com.saberspringcore.test.services.*;
@@ -16,14 +17,19 @@ public class Main {
 //        ApplicationContext context=  new ClassPathXmlApplicationContext("springConfig.xml");
         ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-//        Singer singer = context.getBean("singerOne", Singer.class);
-        Singer singerOne = getSingerBean("singerOne",context, Singer.class);
-        Singer singerTwo = getSingerBean("singerTwo",context, Singer.class);
-        Singer singerThree = getSingerBean("singerThree",context, Singer.class);
 
-        System.out.println(singerOne);
-        System.out.println(singerTwo);
-        System.out.println(singerThree);
+        MessageDigester messageDigester = context.getBean(MessageDigester.class);
+        messageDigester.digest("Hello World !!");
+
+
+//        Singer singer = context.getBean("singerOne", Singer.class);
+//        Singer singerOne = getSingerBean("singerOne",context, Singer.class);
+//        Singer singerTwo = getSingerBean("singerTwo",context, Singer.class);
+//        Singer singerThree = getSingerBean("singerThree",context, Singer.class);
+//
+//        System.out.println(singerOne);
+//        System.out.println(singerTwo);
+//        System.out.println(singerThree);
 
 //        HelloServices helloServices = context.getBean(HelloServices.class);
 //        String sayHello = helloServices.sayHello("saber", "azizi");

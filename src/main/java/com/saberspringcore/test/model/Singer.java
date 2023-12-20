@@ -1,10 +1,11 @@
 package com.saberspringcore.test.model;
 
 import lombok.Data;
-import lombok.ToString;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.InitializingBean;
 
 @Data
-public class Singer {
+public class Singer implements InitializingBean , BeanNameAware {
 
     private static final String DEFAULT_NAME = "No Name";
     private String name;
@@ -30,5 +31,15 @@ public class Singer {
         if (age == null) {
             throw new IllegalArgumentException("You must set the age property of any beans of type " + Singer.class);
         }
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+       // init();
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        this.name=name;
     }
 }

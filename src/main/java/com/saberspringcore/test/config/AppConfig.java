@@ -1,5 +1,7 @@
 package com.saberspringcore.test.config;
 
+import com.saberspringcore.test.model.MessageDigestFactoryBean;
+import com.saberspringcore.test.model.MessageDigester;
 import com.saberspringcore.test.model.Singer;
 import com.saberspringcore.test.model.Song;
 import com.saberspringcore.test.services.HelloServices;
@@ -13,22 +15,24 @@ import java.util.List;
 @ComponentScan(basePackages = "com.saberspringcore.test")
 public class AppConfig {
 
-    @Bean(initMethod = "init",destroyMethod = "destroy")
-    public HelloServices helloServices(){
+    @Bean(initMethod = "init", destroyMethod = "destroy")
+    public HelloServices helloServices() {
         System.out.println("helloService bean called ..............");
         return new HelloServices();
     }
 
     @Bean
-    public Song song1(){
+    public Song song1() {
         return new Song("Here's to hoping");
     }
+
     @Bean
-    public Song song2(){
+    public Song song2() {
         return new Song("Wishing the best for you");
     }
+
     @Bean
-    public List<Song> list(){
+    public List<Song> list() {
         return List.of(
                 new Song("Not the end"),
                 new Song("Rise Up")
@@ -36,22 +40,45 @@ public class AppConfig {
     }
 
     @Bean(initMethod = "init")
-    Singer singerOne(){
+    Singer singerOne() {
         Singer singer = new Singer();
         singer.setName("John Mayer");
         singer.setAge(43);
         return singer;
     }
+
     @Bean(initMethod = "init")
-    Singer singerTwo(){
+    Singer singerTwo() {
         Singer singer = new Singer();
         singer.setAge(42);
         return singer;
     }
+
     @Bean(initMethod = "init")
-    Singer singerThree(){
+    Singer singerThree() {
         Singer singer = new Singer();
         singer.setName("John Butler");
+        singer.setAge(12);
         return singer;
+    }
+
+    @Bean
+    public MessageDigestFactoryBean shaDigest() {
+        MessageDigestFactoryBean shaDigest = new MessageDigestFactoryBean();
+        shaDigest.setAlgorithmName("SHA1");
+        return shaDigest;
+    }
+
+    @Bean
+    public MessageDigestFactoryBean defaultDigest() {
+        return new MessageDigestFactoryBean();
+    }
+
+    @Bean
+    public MessageDigester digester() {
+        MessageDigester messageDigester = new MessageDigester();
+        messageDigester.setDigest1(shaDigest().getObject());
+        messageDigester.setDigest2(defaultDigest().getObject());
+        return messageDigester;
     }
 }
