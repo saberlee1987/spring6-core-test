@@ -15,11 +15,15 @@ import org.springframework.util.StopWatch;
 public class Main {
     public static void main(String[] args) {
 //        ApplicationContext context=  new ClassPathXmlApplicationContext("springConfig.xml");
-        ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+//        ConfigurableApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("springConfig.xml");
+
+        NotificationService notificationService =  context.getBean(NotificationService.class);
+        notificationService.notify("hello saber");
 
 
-        MessageDigester messageDigester = context.getBean(MessageDigester.class);
-        messageDigester.digest("Hello World !!");
+//        MessageDigester messageDigester = context.getBean(MessageDigester.class);
+//        messageDigester.digest("Hello World !!");
 
 
 //        Singer singer = context.getBean("singerOne", Singer.class);

@@ -4,4 +4,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
     <bean class="com.saberspringcore.test.services.HelloServices" id="helloServices"/>
+    <!--    <bean class="com.saberspringcore.test.model.EmailNotifier" id="notifier"/>-->
+
+    <bean class="com.saberspringcore.test.services.impl.NotificationServiceImpl" id="notificationService">
+        <property name="notifier" ref="notifier"/>
+    </bean>
+<!--    <bean id="notifier" class="com.saberspringcore.test.services.NotifierFactory" factory-method="getNotifier"/>-->
+    <bean class="com.saberspringcore.test.services.NotifierFactory" id="notifierFactory"/>
+    <bean id="notifier" factory-bean="notifierFactory" factory-method="getNotifier"/>
 </beans>
